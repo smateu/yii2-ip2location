@@ -48,6 +48,7 @@
         "fix-style": "phpcbf src tests"
     },
     "extra": {
+        "bootstrap": "slavkluev\\Ip2Location\\Bootstrap",
         "branch-alias": {
             "dev-master": "1.0-dev"
         }

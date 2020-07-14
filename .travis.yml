@@ -17,6 +17,7 @@ matrix:
       env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
 
 before_script:
+  - composer config --global github-oauth.github.com "$GITHUB_TOKEN"
   - travis_retry composer global require "fxp/composer-asset-plugin:^1.4.6"
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
 

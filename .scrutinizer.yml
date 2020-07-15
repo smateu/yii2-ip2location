@@ -1,4 +1,7 @@
 build:
+    dependencies:
+        before:
+            - composer global require "fxp/composer-asset-plugin:^1.4.6"
     nodes:
         analysis:
             project_setup:

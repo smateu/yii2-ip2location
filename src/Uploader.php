@@ -6,6 +6,7 @@ namespace slavkluev\Ip2Location;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 use ZipArchive;
 
 class Uploader
@@ -34,6 +35,14 @@ class Uploader
     }
 
     /**
+     * @return Client
+     */
+    public function getHttpClient(): Client
+    {
+        return $this->httpClient;
+    }
+
+    /**
      * @param string $token
      * @param string $code
      * @param string $filePath
@@ -44,14 +53,6 @@ class Uploader
     {
         $tmpFile = $this->uploadUrl($token, $code);
         $this->extractBinFile((string)$tmpFile, $filePath);
-    }
-
-    /**
-     * @return Client
-     */
-    public function getHttpClient(): Client
-    {
-        return $this->httpClient;
     }
 
     /**
@@ -100,17 +101,18 @@ class Uploader
     {
         $tmpFile = new TmpFile();
         $resource = fopen((string)$tmpFile, 'w');
-        $this->httpClient->request(
+        $response = $this->httpClient->request(
             'GET',
-            '/',
+            '',
             [
                 'query' => [
                     'token' => $token,
                     'file' => $code,
                 ],
-                'sink' => $resource,
+                RequestOptions::SINK => $resource,
             ]
         );
+        $response->getBody()->detach();
         fclose($resource);
 
         return $tmpFile;

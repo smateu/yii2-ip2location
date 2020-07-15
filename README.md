@@ -7,8 +7,8 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-An extension that allows you to obtain the visitor's location information from any IP address. Uses IP2Location Database.
-Implemented automatic database update.
+A Yii2 extension allows you to get the user's location by IP address. Use a free Ip2Location LITE database.
+Auto-update database.
 
 ## Install
 

@@ -1,7 +1,7 @@
 {
     "name": "slavkluev/yii2-ip2location",
     "type": "yii2-extension",
-    "description": "",
+    "description": "A Yii2 extension allows you to get the user's location by IP. Use a free Ip2Location LITE database. Auto-update database.",
     "keywords": [
         "slavkluev",
         "yii2-ip2location",

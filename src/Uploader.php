@@ -47,6 +47,14 @@ class Uploader
     }
 
     /**
+     * @return Client
+     */
+    public function getHttpClient(): Client
+    {
+        return $this->httpClient;
+    }
+
+    /**
      * @param string $filename
      * @param string $filePath
      * @throws \Exception

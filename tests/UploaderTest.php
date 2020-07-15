@@ -37,6 +37,16 @@ class UploaderTest extends TestCase
         $this->uploader = new Uploader($httpClient);
     }
 
+    public function testBaseHttpClient()
+    {
+        $uploader = new Uploader();
+        $this->assertInstanceOf(Client::class, $uploader->getHttpClient());
+        $this->assertEquals(
+            'https://www.ip2location.com/download/',
+            $uploader->getHttpClient()->getConfig('base_uri')
+        );
+    }
+
     public function testUpdateWithoutRewrite()
     {
         $this->uploader->update('test', 'test', vfsStream::url('tmp/db.bin'));

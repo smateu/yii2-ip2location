@@ -44,9 +44,9 @@ Get information on user IP address:
 print_r(Yii::$app->ip2location->ip());
 ```
 
-You can use the free database: [IP2Location LITE BIN Data](https://lite.ip2location.com)
-
 ## Update
+
+In order to update the database, a token is required. You can use the free database: [IP2Location LITE BIN Data](https://lite.ip2location.com)
 
 To update the database, use the command:
 

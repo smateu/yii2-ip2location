@@ -25,7 +25,7 @@ class UploaderTest extends TestCase
             [
                 new Response(
                     200,
-                    [],
+                    ['Content-Type' => 'application/zip'],
                     file_get_contents(__DIR__ . '/fixtures/IP2LOCATION-LITE-DB1.BIN.ZIP')
                 ),
             ]
@@ -69,7 +69,7 @@ class UploaderTest extends TestCase
             ->withContent('test')
             ->at($this->root);
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("failed to open stream");
+        $this->expectExceptionMessage('failed to open stream');
         $this->uploader->update('test', 'test', vfsStream::url('tmp/db.bin'));
     }
 
@@ -77,7 +77,7 @@ class UploaderTest extends TestCase
     {
         vfsStream::setQuota(10);
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("possibly out of free disk space");
+        $this->expectExceptionMessage('possibly out of free disk space');
         $this->uploader->update('test', 'test', vfsStream::url('tmp/db.bin'));
     }
 
@@ -87,13 +87,45 @@ class UploaderTest extends TestCase
         $this->mockHandler->append(
             new Response(
                 200,
-                [],
+                ['Content-Type' => 'application/zip'],
                 file_get_contents(__DIR__ . '/fixtures/withoutBinFile.zip')
             )
         );
 
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("bin file has not found");
+        $this->expectExceptionMessage('bin file has not found');
+        $this->uploader->update('test', 'test', vfsStream::url('tmp/db.bin'));
+    }
+
+    public function testUploadWithWrongToken()
+    {
+        $this->mockHandler->reset();
+        $this->mockHandler->append(
+            new Response(
+                200,
+                ['Content-Type' => 'text/html; charset=UTF-8'],
+                'NO PERMISSION'
+            )
+        );
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('NO PERMISSION');
+        $this->uploader->update('test', 'test', vfsStream::url('tmp/db.bin'));
+    }
+
+    public function testUploadWhenLimitIsOver()
+    {
+        $this->mockHandler->reset();
+        $this->mockHandler->append(
+            new Response(
+                200,
+                ['Content-Type' => 'text/html; charset=UTF-8'],
+                'THIS FILE CAN ONLY BE DOWNLOADED 5 TIMES PER HOUR'
+            )
+        );
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('THIS FILE CAN ONLY BE DOWNLOADED 5 TIMES PER HOUR');
         $this->uploader->update('test', 'test', vfsStream::url('tmp/db.bin'));
     }
 }

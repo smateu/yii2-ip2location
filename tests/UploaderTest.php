@@ -19,6 +19,7 @@ class UploaderTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->root = vfsStream::setup('tmp');
         $this->mockHandler = new MockHandler(
             [

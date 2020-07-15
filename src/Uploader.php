@@ -96,6 +96,7 @@ class Uploader
      * @param string $code
      * @return TmpFile
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
     protected function uploadUrl(string $token, string $code): TmpFile
     {
@@ -112,6 +113,14 @@ class Uploader
                 RequestOptions::SINK => $resource,
             ]
         );
+        $contentType = $response->getHeaderLine('Content-Type');
+
+        if ($contentType !== 'application/zip') {
+            $response->getBody()->seek(0);
+            $message = $response->getBody()->read(1024);
+            throw new \Exception('Failure while uploading: ' . $message);
+        }
+
         $response->getBody()->detach();
         fclose($resource);
 

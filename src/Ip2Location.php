@@ -82,6 +82,14 @@ class Ip2Location extends Component
         $this->loadDb();
     }
 
+    /**
+     * @return Database
+     */
+    public function getDb(): Database
+    {
+        return $this->db;
+    }
+
     protected function getDbFile()
     {
         return $this->dbFile ?: Yii::getAlias('@vendor/slavkluev/yii2-ip2location/database/IP2LOCATION-LITE-DB1.BIN');

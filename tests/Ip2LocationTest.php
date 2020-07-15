@@ -2,6 +2,7 @@
 
 namespace slavkluev\Ip2Location;
 
+use IP2Location\Database;
 use PHPUnit\Framework\TestCase;
 use yii\console\Application;
 
@@ -45,7 +46,12 @@ class Ip2LocationTest extends TestCase
         parent::tearDown();
     }
 
-    public function testIp()
+    public function testLoadDbDuringInit()
+    {
+        $this->assertInstanceOf(Database::class, $this->ip2location->getDb());
+    }
+
+    public function testCorrectIp()
     {
         $info = $this->ip2location->ip('127.0.0.0');
         $this->assertArrayHasKey('ipNumber', $info);
@@ -53,5 +59,11 @@ class Ip2LocationTest extends TestCase
         $this->assertArrayHasKey('ipAddress', $info);
         $this->assertArrayHasKey('countryName', $info);
         $this->assertArrayHasKey('countryCode', $info);
+    }
+
+    public function testWrongIp()
+    {
+        $info = $this->ip2location->ip('test');
+        $this->assertFalse($info);
     }
 }

@@ -8,6 +8,7 @@
         "ip2location",
         "yii2",
         "location",
+        "geo",
         "geolocation"
     ],
     "homepage": "https://github.com/slavkluev/yii2-ip2location",

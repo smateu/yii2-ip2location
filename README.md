@@ -10,6 +10,14 @@
 A Yii2 extension allows you to get the user's location by IP address. Use a free Ip2Location LITE database.
 Auto-update database.
 
+## Parameters
+
+- `dbFile` Path to database file. Default: `Yii::getAlias('@vendor/slavkluev/yii2-ip2location/database/DB.BIN')`
+- `downloadToken` Unique download token to download IP2Location databases.
+- `downloadCode` Database code for downloading. Default: `DB1LITEBIN`.
+- `mode` Caching mode (one of `FILE_IO`, `MEMORY_CACHE`, or `SHARED_MEMORY`). Default: `\IP2Location\Database::FILE_IO`.
+- `defaultFields` Field(s) to return. Default: `\IP2Location\Database::ALL`.
+
 ## Install
 
 Package is available on [Packagist](https://packagist.org/packages/slavkluev/yii2-ip2location),

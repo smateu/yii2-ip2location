@@ -7,37 +7,51 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
-
-## Structure
-
-If any of the following are applicable to your project, then the directory structure should follow industry best practices by being named the following.
-
-```
-bin/        
-build/
-docs/
-config/
-src/
-tests/
-vendor/
-```
-
+An extension that allows you to obtain the visitor's location information from any IP address. Uses IP2Location Database.
+Implemented automatic database update.
 
 ## Install
 
-Via Composer
+Package is available on [Packagist](https://packagist.org/packages/slavkluev/yii2-ip2location),
+you can install it using [Composer](http://getcomposer.org).
 
 ``` bash
-$ composer require slavkluev/yii2-ip2location
+composer require slavkluev/yii2-ip2location
 ```
 
 ## Usage
 
+Add `ip2location` component to your configuration file.
+
 ``` php
-$skeleton = new slavkluev\yii2-ip2location();
-echo $skeleton->echoPhrase('Hello, League!');
+'components' => [
+    'ip2location' => [
+      'class' => \slavkluev\Ip2Location\Ip2Location::class,
+      'downloadToken' => 'secret',
+    ],
+],
+```
+
+Get information on custom IP address:
+
+``` php
+print_r(Yii::$app->ip2location->ip('127.0.0.1'));
+```
+
+Get information on user IP address:
+
+``` php
+print_r(Yii::$app->ip2location->ip());
+```
+
+You can use the free database: [IP2Location LITE BIN Data](https://lite.ip2location.com)
+
+## Update
+
+To update the database, use the command:
+
+``` bash
+$ yii ip2location/update
 ```
 
 ## Testing

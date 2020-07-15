@@ -62,11 +62,27 @@ class UploaderTest extends TestCase
         $this->uploader->update('test', 'test', vfsStream::url('tmp/db.bin'));
     }
 
-    public function testUpdateWithoutSpace()
+    public function testUpdateWithoutFreeSpace()
     {
         vfsStream::setQuota(10);
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage("possibly out of free disk space");
+        $this->uploader->update('test', 'test', vfsStream::url('tmp/db.bin'));
+    }
+
+    public function testUpdateWithEmptyZipFile()
+    {
+        $this->mockHandler->reset();
+        $this->mockHandler->append(
+            new Response(
+                200,
+                [],
+                file_get_contents(__DIR__ . '/fixtures/withoutBinFile.zip')
+            )
+        );
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("bin file has not found");
         $this->uploader->update('test', 'test', vfsStream::url('tmp/db.bin'));
     }
 }

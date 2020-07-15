@@ -101,7 +101,7 @@ class Uploader
     protected function uploadUrl(string $token, string $code): TmpFile
     {
         $tmpFile = new TmpFile();
-        $resource = fopen((string)$tmpFile, 'w');
+        $resource = fopen((string)$tmpFile, 'w+');
         $response = $this->httpClient->request(
             'GET',
             '',

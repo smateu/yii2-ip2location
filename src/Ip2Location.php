@@ -11,27 +11,32 @@ use yii\base\Component;
 class Ip2Location extends Component
 {
     /**
+     * Path to database file.
      * @var string
      */
     public $dbFile;
 
     /**
+     * Unique download token to download IP2Location databases.
      * @var string
      */
     public $downloadToken;
 
     /**
+     * Database code for downloading.
      * @var string
      */
     public $downloadCode = 'DB1LITEBIN';
 
     /**
+     * Caching mode (one of FILE_IO, MEMORY_CACHE, or SHARED_MEMORY).
      * @var int
      */
     public $mode = Database::FILE_IO;
 
     /**
-     * @var int
+     * Field(s) to return.
+     * @var array|int
      */
     public $defaultFields = Database::ALL;
 
@@ -58,6 +63,8 @@ class Ip2Location extends Component
     }
 
     /**
+     * This function will look the given IP address up in the database and return the result(s) asked for.
+     *
      * @param string|null $ip
      *
      * @return array|bool|mixed
@@ -72,6 +79,8 @@ class Ip2Location extends Component
     }
 
     /**
+     * Updates and reloads the database.
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Exception
      */
@@ -92,6 +101,6 @@ class Ip2Location extends Component
 
     protected function getDbFile()
     {
-        return $this->dbFile ?: Yii::getAlias('@vendor/slavkluev/yii2-ip2location/database/IP2LOCATION-LITE-DB1.BIN');
+        return $this->dbFile ?: Yii::getAlias('@vendor/slavkluev/yii2-ip2location/database/DB.BIN');
     }
 }

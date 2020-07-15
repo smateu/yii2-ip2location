@@ -43,9 +43,12 @@ class Uploader
     }
 
     /**
+     * Updates the database.
+     *
      * @param string $token
      * @param string $code
      * @param string $filePath
+     *
      * @throws GuzzleException
      * @throws \Exception
      */
@@ -56,18 +59,21 @@ class Uploader
     }
 
     /**
+     * Extracts bin file from the zip archive to filepath.
+     *
      * @param string $filename
-     * @param string $filePath
+     * @param string $filepath
+     *
      * @throws \Exception
      */
-    protected function extractBinFile(string $filename, string $filePath)
+    protected function extractBinFile(string $filename, string $filepath)
     {
         $zip = new ZipArchive();
         $zip->open($filename);
         $binFilename = $this->findBinFile($zip);
         $file = $zip->getFromName($binFilename);
 
-        if (false === @file_put_contents($filePath, $file)) {
+        if (false === @file_put_contents($filepath, $file)) {
             throw new \Exception('Failure while storing: ' . error_get_last()['message']);
         }
 
@@ -75,8 +81,12 @@ class Uploader
     }
 
     /**
+     * Finds bin file in the zip archive.
+     *
      * @param ZipArchive $archive
+     *
      * @return string
+     *
      * @throws \Exception
      */
     protected function findBinFile(ZipArchive $archive): string
@@ -92,9 +102,13 @@ class Uploader
     }
 
     /**
+     * Uploads IP2Location database.
+     *
      * @param string $token
      * @param string $code
+     *
      * @return TmpFile
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Exception
      */

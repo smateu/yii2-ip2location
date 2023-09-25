@@ -22,11 +22,10 @@
         }
     ],
     "require": {
-        "php": "~7.2",
+        "php" : ">=7.4",
         "ext-zip": "*",
-        "guzzlehttp/guzzle": "^6.5|^7.0",
-        "ip2location/ip2location-php": "^8.2",
-        "yiisoft/yii2": "^2.0.13.1"
+        "guzzlehttp/guzzle": "^7.8",
+        "ip2location/ip2location-php": "^9.7"
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6",
